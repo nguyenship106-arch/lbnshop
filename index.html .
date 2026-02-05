@@ -1,1179 +1,179 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap');
-        
-        /* CÁC BIẾN MÀU CHỦ ĐẠO */
-        :root {
-            --blue-primary: #00BFFF; /* Deep Sky Blue */
-            --blue-dark: #007AA3; /* Darker Blue */
-            --blue-light: #4DFFFF; /* Lighter Cyan Blue */
-            --blue-gradient-start: #00FFFF; /* Cyan */
-            --blue-gradient-end: #00A3CC; /* Ocean Blue */
-            --text-color: #FFFFFF;
-            --blue-background-deep: #001A33; /* Rất đậm */
-            --success: #00CC00; /* Màu thành công (giữ nguyên xanh lá) */
-            --danger: #ef4444;  /* Màu lỗi (giữ nguyên đỏ) */
-        }
-        
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: var(--text-color);
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 191, 255, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(0, 163, 204, 0.15) 0%, transparent 40%);
-            animation: bgPulse 12s infinite alternate;
-            overflow-y: auto;
-            min-height: 100vh;
-        }
-        
-        @keyframes bgPulse {
-            0% { background-color: #000011; }
-            100% { background-color: #110000; }
-        }
-        
-        .container {
-            max-width: 380px;
-            margin: 30px auto;
-            background: rgba(5, 5, 15, 0.85); 
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 
-                0 0 15px var(--blue-primary),
-                0 0 30px rgba(0, 191, 255, 0.3);
-            border: 1px solid var(--blue-primary);
-            backdrop-filter: blur(8px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                transparent 45%,
-                var(--blue-primary) 50%,
-                transparent 55%
-            );
-            opacity: 0.3;
-            animation: scan 6s linear infinite;
-            z-index: -1;
-        }
-        
-        @keyframes scan {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bi Enter Device | Link Bio</title>
 
-        /* --- PHẦN LOGIN FORM STYLE --- */
-        .login-container {
-            padding: 20px 0 0 0; 
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        .login-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+*{
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        .login-header h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            color: var(--blue-light);
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0 0 10px var(--blue-light), 0 0 20px rgba(0, 191, 255, 0.5);
-            animation: neon-pulse 1.5s ease-in-out infinite alternate;
-        }
+body{
+    margin:0;
+    min-height:100vh;
+    background:radial-gradient(circle at top,#3a0ca3,#0b0014);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+}
 
-        @keyframes neon-pulse {
-            0% { text-shadow: 0 0 10px var(--blue-light), 0 0 20px rgba(0, 191, 255, 0.5); }
-            100% { text-shadow: 0 0 5px var(--blue-light), 0 0 15px rgba(0, 191, 255, 0.3); }
-        }
+.bio-container{
+    width:100%;
+    max-width:420px;
+    padding:25px;
+    text-align:center;
+}
 
-        .input-group {
-            margin: 20px 0;
-            position: relative;
-            padding: 0 20px; 
-        }
+/* AVATAR */
+.avatar{
+    width:130px;
+    height:130px;
+    margin:0 auto 15px;
+    border-radius:50%;
+    overflow:hidden;
+    border:4px solid #a855f7;
+    box-shadow:0 0 25px #a855f7;
+}
 
-        .login-input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 10, 20, 0.7);
-            border: 1px solid var(--blue-dark);
-            border-radius: 8px;
-            color: var(--text-color);
-            font-size: 16px;
-            box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
-            transition: border-color 0.3s, box-shadow 0.3s;
-            box-sizing: border-box; 
-        }
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
 
-        .login-input:focus {
-            outline: none;
-            border-color: var(--blue-primary);
-            box-shadow: 0 0 8px var(--blue-primary);
-        }
+/* NAME */
+.name{
+    font-size:26px;
+    font-weight:700;
+}
 
-        .login-input::placeholder {
-            color: #888;
-        }
+.sub{
+    font-size:14px;
+    opacity:.85;
+    margin-bottom:25px;
+}
 
-        .login-button {
-            width: calc(100% - 40px); 
-            margin: 0 20px;
-            padding: 15px;
-            background: linear-gradient(90deg, var(--blue-primary), var(--blue-light));
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 15px rgba(0, 191, 255, 0.6);
-            transition: background 0.3s, transform 0.1s, box-shadow 0.3s;
-            font-family: 'Orbitron', sans-serif;
-        }
+/* BUTTON */
+.link{
+    display:block;
+    text-decoration:none;
+    color:#fff;
+    background:linear-gradient(135deg,#7c3aed,#c084fc);
+    padding:15px;
+    border-radius:14px;
+    margin-bottom:14px;
+    font-weight:600;
+    box-shadow:0 8px 25px rgba(168,85,247,.45);
+    transition:.25s;
+}
 
-        .login-button:hover {
-            background: linear-gradient(90deg, var(--blue-light), var(--blue-primary));
-            box-shadow: 0 0 20px rgba(0, 191, 255, 0.8);
-        }
+.link:hover{
+    transform:translateY(-3px) scale(1.02);
+}
 
-        .login-button:active {
-            transform: scale(0.98);
-        }
+/* MUSIC BUTTON */
+.music-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#a855f7;
+    color:#fff;
+    border:none;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 0 20px #a855f7;
+}
 
-        .message-box {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            font-weight: bold;
-            min-height: 20px; 
-        }
-
-        .message-box.error {
-            color: var(--danger);
-            text-shadow: 0 0 5px var(--danger);
-            animation: glitch-error 0.5s steps(2, end) infinite;
-        }
-
-        .message-box.success {
-            color: var(--success);
-            text-shadow: 0 0 5px var(--success);
-        }
-
-        @keyframes glitch-error {
-            0% { transform: translate(1px, 1px); }
-            25% { transform: translate(-1px, -1px); }
-            50% { transform: translate(1.5px, 1.5px); }
-            75% { transform: translate(-0.5px, -0.5px); }
-            100% { transform: translate(1px, 1px); }
-        }
-        
-        /* --- LỚP ẨN HIỆN --- */
-        .hidden-content {
-            display: none;
-        }
-        
-        /* --- PHẦN PROFILE CARD --- */
-        .profile-card {
-            display: flex; 
-            align-items: center;
-            background: linear-gradient(135deg, rgba(0, 32, 64, 0.9), rgba(0, 48, 96, 0.9));
-            border: 2px solid var(--blue-primary);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px; 
-            box-shadow: 0 0 15px rgba(0, 191, 255, 0.7);
-            backdrop-filter: blur(8px);
-        }
-        
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid var(--blue-light);
-            margin-right: 15px;
-            box-shadow: 0 0 10px var(--blue-light);
-            position: relative;
-        }
-        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .profile-info {
-            flex-grow: 1;
-        }
-
-        .profile-info h3 { 
-            font-size: 22px; 
-            font-family: 'Orbitron', sans-serif; 
-            margin: 0 0 4px 0; 
-            color: var(--blue-light);
-            text-shadow: 0 0 8px var(--blue-light); 
-            letter-spacing: 1px;
-        }
-        .profile-info p { 
-            color: var(--blue-primary); 
-            margin-bottom: 15px; 
-            font-size: 14px; 
-            font-weight: bold;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 10px;
-        }
-
-        .social-links .social-btn {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px 10px;
-            background: rgba(0, 64, 128, 0.8);
-            color: var(--text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            border: 1px solid var(--blue-primary);
-            transition: background 0.2s, box-shadow 0.2s;
-            box-shadow: 0 0 5px rgba(0, 191, 255, 0.3);
-        }
-        .social-links .social-btn:hover {
-            background: var(--blue-primary);
-            color: #000;
-            box-shadow: 0 0 10px var(--blue-light);
-        }
-        
-        /* --- PHẦN MENU CHÍNH --- */
-        .feature {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            margin: 12px 0;
-            background: linear-gradient(90deg, rgba(0, 32, 64, 0.3), transparent); 
-            border-radius: 10px;
-            border-left: 3px solid var(--blue-primary);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 191, 255, 0.2), transparent); 
-            transition: 0.5s;
-        }
-        
-        .feature:hover {
-            background: linear-gradient(90deg, rgba(0, 48, 96, 0.5), transparent); 
-            box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-        }
-        
-        .feature:hover::after {
-            left: 100%;
-        }
-        
-        .feature-info {
-            flex: 1;
-        }
-        
-        .feature-name {
-            font-weight: bold;
-            color: var(--blue-primary);
-            font-size: 17px;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 5px var(--blue-primary);
-        }
-        
-        .feature-desc {
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 4px;
-            letter-spacing: 0.3px;
-        }
-        
-        /* Toggle */
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 55px;
-            height: 28px;
-        }
-        
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 51, 102, 0.5); 
-            transition: .4s;
-            border-radius: 28px;
-            box-shadow: inset 0 0 5px #000;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 3px;
-            bottom: 3px;
-            background: linear-gradient(145deg, #ccc, #fff);
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 0 0 5px #fff;
-        }
-        
-        input:checked + .slider {
-            background: linear-gradient(90deg, var(--blue-gradient-start), var(--blue-gradient-end));
-            box-shadow: 0 0 10px var(--blue-primary);
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(27px);
-            background: #fff;
-            box-shadow: 0 0 10px #fff;
-        }
-        
-        .vip-badge {
-            background: linear-gradient(90deg, #ff0, #f90);
-            color: #000;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 8px;
-            font-weight: bold;
-            text-shadow: 0 0 2px rgba(0,0,0,0.3);
-            box-shadow: 0 0 5px #ff0;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 11px;
-            color: #555;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        
-        /* --- Performance Stats (CPU/RAM/NETWORK) --- */
-        .performance-card {
-            padding: 20px 0;
-            margin-bottom: 25px;
-            background: rgba(5, 5, 15, 0.6); 
-            border-radius: 10px;
-            border: 1px solid var(--blue-primary);
-            box-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
-        }
-        .performance-stats { display: flex; justify-content: space-around; text-align: center; }
-        .stat-circle-container { position: relative; width: 80px; height: 80px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .stat-circle-container svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
-        .stat-circle-container circle { fill: none; stroke-width: 6; stroke-linecap: round; }
-        .bg-circle { stroke: rgba(255, 255, 255, 0.15); }
-        .progress-circle { stroke-dasharray: 251.2; transition: stroke-dashoffset 1.5s ease-out, stroke 0.5s; }
-        #cpu-progress { stroke: var(--blue-light); animation: cpu-load-ring 3s infinite alternate; }
-        #ram-progress { stroke: #ff7f00; }
-        #network-progress { stroke: #00ff00; }
-        .stat-circle-text { position: absolute; font-size: 16px; font-weight: bold; color: var(--text-color); z-index: 10; }
-        .stat-circle-label { position: absolute; font-size: 10px; color: var(--blue-light); margin-top: 25px; z-index: 10; font-weight: bold; }
-
-        /* FPS Chart */p
-        .fps-chart-section { margin-top: 30px; padding: 15px; background: rgba(5, 5, 15, 0.6); border-radius: 10px; border: 1px solid var(--blue-primary); box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); }
-        .chart-box { position: relative; width: 100%; height: 180px; background-color: var(--blue-background-deep); border-radius: 5px; overflow: hidden; border: 1px solid var(--blue-dark); box-shadow: inset 0 0 8px #000; }
-        .chart-grid { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: linear-gradient(to right, rgba(0, 191, 255, 0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 191, 255, 0.2) 1px, transparent 1px); background-size: 12.5% 18px; pointer-events: none; }
-        #fpsLine { fill: none; stroke: var(--blue-light); stroke-width: 2; filter: drop-shadow(0 0 5px var(--blue-primary)); transition: stroke-dashoffset 0.1s linear; }
-        .fps-labels { position: absolute; top: 0; right: 0; padding: 5px 10px; font-size: 12px; font-weight: bold; color: var(--blue-light); display: flex; flex-direction: column; text-align: right; }
-        .max-fps { color: #00ff00; }
-        .min-fps { color: #ff0000; }
-
-        /* Nút Tâm Ảo và Launch Game */
-        .crosshair-button { background: linear-gradient(90deg, var(--blue-primary), var(--blue-light)); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; letter-spacing: 1px; box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); transition: background 0.3s, transform 0.1s; width: 100%; }
-        .game-launch-card { margin-top: 25px; padding: 15px; background: rgba(5, 5, 15, 0.6); border-radius: 10px; border: 1px solid var(--blue-primary); box-shadow: 0 0 10px rgba(0, 191, 255, 0.3); text-align: center; }
-        .action-buttons { display: flex; gap: 10px; }
-        .btn-launch { flex-grow: 1; padding: 12px 10px; background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark)); border: none; border-radius: 8px; color: white; font-size: 15px; font-weight: 700; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0, 191, 255, 0.4); transition: transform 0.2s, opacity 0.2s; }
-        .btn-launch:hover { opacity: 0.9; transform: translateY(-1px); }
-        
-        /* Modal và Crosshair */
-        .crosshair-modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-        .crosshair-settings { background: rgba(5, 5, 15, 0.95); margin: 15% auto; padding: 20px; border: 1px solid var(--blue-primary); width: 80%; max-width: 300px; border-radius: 12px; box-shadow: 0 0 20px var(--blue-primary); }
-        .control-group { margin-bottom: 15px; }
-        .control-group label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: bold; color: var(--blue-light); }
-        .control-group input[type="range"] { width: 100%; -webkit-appearance: none; height: 8px; background: rgba(0, 64, 128, 0.5); border-radius: 4px; outline: none; transition: opacity .2s; }
-        .control-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--blue-primary); cursor: pointer; border: 2px solid var(--text-color); box-shadow: 0 0 5px var(--blue-light); }
-        .toggle-crosshair-btn { width: 100%; padding: 10px; border-radius: 8px; border: none; font-weight: bold; margin-top: 10px; transition: background 0.3s; }
-        
-        #virtualCrosshair { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; pointer-events: none; z-index: 9999; }
-
-        /* TOAST NOTIFICATION */
-        .notification { position: fixed; top: 20px; right: 20px; transform: translateY(-100px); padding: 15px 25px; border-radius: 12px; font-weight: 600; color: var(--text-color); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); transition: transform 0.5s ease-out, opacity 0.5s ease-out; opacity: 0; z-index: 200; font-size: 14px; max-width: 90%; text-align: right; min-width: 150px; font-family: 'Rajdhani', sans-serif; }
-        .notification.show { transform: translateY(0); opacity: 1; }
-
-        /* --- SCRIPT 5: STYLE ẨN/HIỆN KEY (Eye Icon) --- */
-        .toggle-btn {
-            width: 30px; /* Chiều rộng cố định cho nút */
-            height: 30px; /* Chiều cao cố định cho nút */
-            display: flex; /* Dùng flexbox để căn giữa icon */
-            justify-content: center;
-            align-items: center;
-            position: absolute; 
-            right: 20px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            background: none; 
-            border: none; 
-            cursor: pointer; 
-            padding: 0; 
-            z-index: 10;
-            transition: color 0.3s;
-        }
-
-        .eye-icon {
-            display: block;
-            width: 20px;
-            height: 12px;
-            border: 2px solid var(--blue-primary);
-            border-radius: 50%;
-            position: relative;
-            box-sizing: border-box; 
-            transition: border-color 0.3s;
-        }
-
-        .eye-icon::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6px;
-            height: 6px;
-            background-color: var(--blue-primary);
-            border-radius: 50%;
-            transition: background-color 0.3s;
-        }
-
-        /* Biểu tượng khi bị gạch chéo (mắt đóng / key hiện) */
-        .eye-icon.closed::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 120%; 
-            height: 2px; 
-            background-color: var(--blue-primary);
-            transform: translate(-50%, -50%) rotate(45deg); 
-            transition: background-color 0.3s;
-        }
-
-        /* Hover effect */
-        .toggle-btn:hover .eye-icon {
-            border-color: var(--blue-light);
-        }
-        .toggle-btn:hover .eye-icon::before {
-            background-color: var(--blue-light);
-        }
-        .toggle-btn:hover .eye-icon.closed::after {
-            background-color: var(--blue-light);
-        }
-    </style>
+.footer{
+    margin-top:25px;
+    font-size:12px;
+    opacity:.6;
+}
+</style>
 </head>
-<body onload="updateStatsInitial()">
-    
-    <div class="notification" id="notification"></div>
 
-    <div class="container">
-        
-        <div id="profile-card" class="profile-card">
-            <div class="profile-avatar">
-                <img src="https://sf-static.upanhlaylink.com/img/image_202601180595f429408f3a2b375f5cfec0faf2e7.jpg" alt="Profile">
-            </div>
-            <div class="profile-info">
-                <h3> LBN SHOP </h3>
-                <p>ADMIN : DEV Bao Nguyen👑💤</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/share/1BmTXZyoCL/?mibextid=wwXIfr" target="_blank" class="social-btn">📘 Facebook</a>
-                    <a href="https://zalo.me/0877660792" target="_blank" class="social-btn">💬 Zalo</a>
-                </div>
-            </div>
-        </div>
-        
-        <div id="login-screen" class="login-container">
-            <div class="login-header">
-                <h1>Nhập Key Để Tiếp Tục</h1>
-            </div>
-            
-            <form id="login-form">
-                <div class="input-group" style="position: relative;">
-                    <input type="password" id="accessKey" class="login-input" placeholder="Nhập Key Truy Cập " required>
-                    <button type="button" id="togglePassword" class="toggle-btn">
-                        <span class="eye-icon"></span>
-                    </button>
-                </div>
-                
-                <button type="submit" class="login-button">KÍCH HOẠT MENU</button>
-            </form>
-            
-            <div id="login-message" class="message-box"></div>
-            
-            <div class="footer" style="margin-top: 50px;">
-                © 2025 BẢN QUYỀN DEV Le Bao Nguyen👑💤
-            </div>
-        </div>
-        
-        <div id="main-menu" class="hidden-content">
-            
-            <div class="performance-card">
-                <div class="performance-stats">
-                    <div class="stat-circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="bg-circle" cx="50" cy="50" r="40"></circle>
-                            <circle id="cpu-progress" class="progress-circle" cx="50" cy="50" r="40"></circle>
-                        </svg>
-                        <span class="stat-circle-text" id="cpu-percent">25%</span>
-                        <span class="stat-circle-label">CPU</span>
-                    </div>
-                    
-                    <div class="stat-circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="bg-circle" cx="50" cy="50" r="40"></circle>
-                            <circle id="ram-progress" class="progress-circle" cx="50" cy="50" r="40"></circle>
-                        </svg>
-                        <span class="stat-circle-text" id="ram-percent">0%</span>
-                        <span class="stat-circle-label">RAM</span>
-                    </div>
-                    
-                    <div class="stat-circle-container">
-                        <svg viewBox="0 0 100 100">
-                            <circle class="bg-circle" cx="50" cy="50" r="40"></circle>
-                            <circle id="network-progress" class="progress-circle" cx="50" cy="50" r="40"></circle>
-                        </svg>
-                        <span class="stat-circle-text" id="network-percent">0%</span>
-                        <span class="stat-circle-label">NETWORK</span>
-                    </div>
-                </div>
+<body>
 
-                <div class="button-container" style="text-align: center; margin-top: 15px;">
-                    <button class="crosshair-button" onclick="openCrosshairModal()"> TÂM ẢO (Click Vào Đây) </button>
-                </div>
-            </div>
+<!-- NHẠC NỀN -->
+<audio id="bgMusic" loop>
+    <source src="https://files.catbox.moe/a78h4x.mp3" type="audio/mpeg">
+</audio>
 
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">Optimize Game </div>
-                    <div class="feature-desc">Tối Ưu Game Fix Lag</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('OPTIMIZE GAME', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">Buff 240Hz<span class="vip-badge">VIP</span></div>
-                    <div class="feature-desc">On 240Hz Tối Ưu Máy</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('FPS 240HZ UNLOCKER', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">Fix All<span class="vip-badge">VIP</span></div>
-                    <div class="feature-desc">Giảm Tỉ Lệ Lố Đầu Fix Rung Tâm</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('FIX LỐ + FIX RUNG', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">AimLock</div>
-                    <div class="feature-desc">Tăng Tỉ Lệ Headshot 95%</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('AIMLOCK PRO', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">Sensivity<span class="vip-badge">VIP</span></div>
-                    <div class="feature-desc">Tăng Nhẹ Tâm Nhạy Màn </div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('Sensivity Pro', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">AimBot</div>
-                    <div class="feature-desc">Khoá Chặt Vùng Đầu Aim Chặt</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('AIMBOT PRO', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="feature">
-                <div class="feature-info">
-                    <div class="feature-name">Supper Config</div>
-                    <div class="feature-desc">Mượt Màn Tối Ưu Tăng Nhạy Cảm Ứng</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" onchange="toggleFeature('SUPPER CONFIG PRO', this.checked)">
-                    <span class="slider"></span>
-                </label>
-            </div>
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
 
-            <div class="fps-chart-section">
-                <div class="chart-header">
-                    <h2><span class="icon">⚡️</span> Biểu Đồ FPS  <span class="blue-text"></span></h2>
-                </div>
-                <div class="chart-box">
-                    <div class="fps-labels">
-                        <span class="max-fps">240 FPS</span>
-                        <span class="current-fps" id="currentFps">120 FPS</span>
-                        <span class="min-fps">60 FPS</span>
-                    </div>
-                    <div class="chart-grid"></div>
-                    
-                    <svg id="fpsChartSVG" viewBox="0 0 340 180" preserveAspectRatio="none">
-                        <polyline id="fpsLine" points=""></polyline>
-                    </svg>
-                </div>
-            </div>
-            
-            <div class="game-launch-card">
-                <h2>Khởi Chạy </h2>
-                <div class="action-buttons">
-                    <button class="btn-launch" onclick="openFreeFire()">🔥 On Panel TH</button>
-                    <button class="btn-launch" onclick="openFreeFireMax()">⚡ On Panel MAX </button>
-                </div>
-            </div>
+<div class="bio-container">
 
-            <div class="footer">
-                © 2025 BẢN QUYỀN DEV Bao Nguyen👑💤
-            </div>
-        </div>
-        </div>
-    
-    <div id="crosshairModal" class="crosshair-modal">
-        <div class="crosshair-settings">
-            <div class="modal-header">
-                <h3>⚙️ Cài Đặt Tâm Ảo</h3>
-                <span class="close-btn" onclick="closeCrosshairModal()">&times;</span>
-            </div>
-            
-            <div class="control-group">
-                <label for="sizeRange">Kích Thước (<span id="sizeValue">100</span>%)</label>
-                <input type="range" id="sizeRange" min="50" max="200" value="100" oninput="updateCrosshair()">
-            </div>
-
-            <div class="control-group">
-                <label for="xRange">Vị Trí Ngang X (<span id="xValue">0</span> px)</label>
-                <input type="range" id="xRange" min="-150" max="150" value="0" oninput="updateCrosshair()">
-            </div>
-
-            <div class="control-group">
-                <label for="yRange">Vị Trí Dọc Y (<span id="yValue">0</span> px)</label>
-                <input type="range" id="yRange" min="-150" max="150" value="0" oninput="updateCrosshair()">
-            </div>
-
-            <div class="control-group">
-                <label for="opacityRange">Độ Mờ (<span id="opacityValue">1.0</span>)</label>
-                <input type="range" id="opacityRange" min="0.1" max="1.0" step="0.1" value="1.0" oninput="updateCrosshair()">
-            </div>
-
-            <button class="toggle-crosshair-btn" onclick="toggleCrosshairDisplay()">BẬT/TẮT TÂM ẢO</button>
-        </div>
+    <!-- AVATAR -->
+    <div class="avatar">
+        <img src="https://sf-static.upanhlaylink.com/img/image_202602056c088e76cd44cc727e6649e543b015c2.jpg" alt="Bi Enter Device">
     </div>
 
-    <img id="virtualCrosshair" src="https://i.postimg.cc/FzQNpVZ5/IMG-2481.png" alt="Tâm Ảo" style="display: none;">
+    <!-- NAME -->
+    <div class="name">Bi Enter Device</div>
+    <div class="sub">Web • Acc Clone • Hack • Cộng Đồng</div>
 
-    <script>
-        // --- LOGIC ÂM THANH (WEB AUDIO API) ---
-        const sounds = (()=>{
-            let ctx;
-            const ensureCtx=()=>{ 
-                if(!ctx){ 
-                    try{ 
-                        ctx=new (window.AudioContext||window.webkitAudioContext)(); 
-                    }catch(e){
-                         console.error("Lỗi khởi tạo Audio Context:", e);
-                    } 
-                } 
-                return ctx; 
-            };
-            const osc = (f=920,ms=90, vol=0.10)=>{ 
-                const c=ensureCtx(); 
-                if(!c) return;
-                
-                const o=c.createOscillator(), g=c.createGain();
-                o.connect(g).connect(c.destination);
-                o.frequency.value=f;
-                g.gain.setValueAtTime(vol, c.currentTime); 
-                o.start();
-                g.gain.exponentialRampToValueAtTime(0.001, c.currentTime+ms/1000); 
-                o.stop(c.currentTime+ms/1000);
-            };
-            
-            return { 
-                toggle:()=>osc(920,90, 0.08), 
-                success:()=>osc(1500,150, 0.1),
-                error:()=>osc(300,100, 0.1)
-            }; 
-        })();
+    <!-- WEBSITE -->
+    <a class="link" onclick="openLink('https://bientershop.io.vn')">
+        🌐 Website – Mua Bán Acc Clone & Hack
+    </a>
 
-        function playSound(type){
-            if(type==='toggle') sounds.toggle();
-            else if(type==='success') sounds.success();
-            else if(type==='error') sounds.error();
-        }
+    <!-- ZALO ADMIN -->
+    <a class="link" onclick="openLink('https://zalo.me/0877660792')">
+        📞 Zalo Admin
+    </a>
 
-        // --- HÀM THÔNG BÁO ---
-        function showNotification(message, type = 'success') {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.className = `notification show ${type}`;
-            setTimeout(() => notification.classList.remove('show'), 3000);
-        }
+    <!-- FACEBOOK ADMIN -->
+    <a class="link" onclick="openLink('https://www.facebook.com/share/1CFxgvNuTy/?mibextid=wwXIfr')">
+        📘 Facebook Admin
+    </a>
 
-        // --- HÀM CHUNG ---
-        
-        function toggleFeature(name, enabled) {
-            const status = enabled ? 'BẬT' : 'TẮT';
-            const emoji = enabled ? '✅' : '🔴';
-            const type = enabled ? 'success' : 'error';
-            
-            playSound('toggle');
+    <!-- TELE MUA & SHARE -->
+    <a class="link" onclick="openLink('https://t.me/leavencheat')">
+        🛒 Nhóm Tele – Mua & Share Đồ Chơi
+    </a>
 
-            const feature = Array.from(document.querySelectorAll('.feature-name')).find(el => el.textContent.includes(name)).closest('.feature');
-            const featureNameEl = feature.querySelector('.feature-name');
-            const BLUE_LIGHT = 'var(--blue-light)';
-            const BLUE_PRIMARY = 'var(--blue-primary)';
+    <!-- TELE CHAT -->
+    <a class="link" onclick="openLink('https://t.me/+OAIXB6jdYwM3Zjg1')">
+        💬 Nhóm Chat Tele – Trò Chuyện & Khoe Kĩ Năng
+    </a>
 
-            if (enabled) {
-                feature.style.borderLeft = `3px solid ${BLUE_LIGHT}`;
-                featureNameEl.style.textShadow = `0 0 10px ${BLUE_LIGHT}`;
-                featureNameEl.style.color = BLUE_LIGHT;
-                feature.style.boxShadow = `0 0 15px ${BLUE_LIGHT}`;
-                setTimeout(() => {
-                    feature.style.boxShadow = '0 0 10px rgba(0, 191, 255, 0.3)';
-                }, 300);
-            } else {
-                feature.style.borderLeft = `3px solid ${BLUE_PRIMARY}`;
-                featureNameEl.style.textShadow = `0 0 5px ${BLUE_PRIMARY}`;
-                featureNameEl.style.color = BLUE_PRIMARY;
-                feature.style.boxShadow = 'none';
-            }
-            
-            showNotification(`${emoji} ${name} đã được ${status}!`, type);
-        }
+    <!-- ZALO GROUP -->
+    <a class="link" onclick="openLink('https://zalo.me/g/yfmocf505')">
+        📦 Nhóm Zalo – Mua & Share Đồ
+    </a>
 
-        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
-            toggle.addEventListener('change', function() {
-                const featureName = this.closest('.feature').querySelector('.feature-name').textContent.replace(/\s*(<span class="vip-badge">VIP<\/span>)?\s*$/, '').trim();
-                toggleFeature(featureName, this.checked);
-            });
-        });
-        
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+    <div class="footer">© 2026 Bi Enter Device</div>
+</div>
 
-        // --- SCRIPT LOGIN (ĐÃ GỠ BỎ LOGIC KHÓA KEY THEO THIẾT BỊ) ---
-        const loginForm = document.getElementById('login-form');
-        const loginMessage = document.getElementById('login-message');
-        const loginScreen = document.getElementById('login-screen');
-        const mainMenu = document.getElementById('main-menu');
+<script>
+/* FIX MỞ LINK TRONG TIKTOK / ZALO */
+function openLink(url){
+    window.location.href = url;
+}
 
-        const VALID_ACCESS_KEYS_BASE64 = [
-         'YmllbnRlcnZpcGtleS1pb3NA',
-            'WmFuaQ==',
-            'Ymk=',
-            'UGFuZWxJT1MyLjAtVmlwQ2hlYXQ=',
-            'UGFuZWxJT1MyLjAtVmlwQ2hlYXRLZXkx',
-            'UGFuZWxJT1MyLjAtVmlwQ2hlYXRLZXkxMA==',
-            'R09MT01kY1ZpRGx2eG9lT0ZqUUs=',
-            'NVRzZEFvQ0J4ekZJb01zZEd3Tlc=',
-            'QnlYV3VkbllhV293ekdJb3ZtWnc=',
-            'Skp4Z3p5Z0F3d3l0VmNlcnZqYk8=',
-            'bVpYd1dSUHprS0hrc1l2d0hSTkI=',
-            'aXFxUUtkY0lFQlN0aFVxSlJ6QW8=',
-            'ZkRzV3R2Z09hT21WdGtHZm95Q0c=',
-            'cmJtT2l1NlR1bUpnU0xlaU92bVk=',
-            'S2R3TU5VcnR2TXNzdE1rUGFqa1k=',
-            'bGt5T1lRa0Z2RkFvY1pQYm9vR3Q=',
-            'c2J1V3pCWHB3cHFzWElrUVF6dWY=',
-            'cWp2WmxHUU95ZkNyTGV6V1Zsdmc=',
-            'ZE94ZklkY09nckZ0WVNqWHVvVkw=',
-            'Nlp1a0Ztd0l3VHZlTXJ1TUtGck0='
-        ];
+/* NHẠC */
+const music = document.getElementById("bgMusic");
+let playing = false;
 
-        // Hàm chuyển đổi Plain Text sang Base64
-        function encodeBase64(str) {
-            try {
-                return btoa(str);
-            } catch (e) {
-                console.error("Lỗi mã hóa Base64:", e);
-                return ''; 
-            }
-        }
+function toggleMusic(){
+    if(!playing){
+        music.play();
+        playing = true;
+    }else{
+        music.pause();
+        playing = false;
+    }
+}
+</script>
 
-        if (loginForm) {
-             loginForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const enteredKey = document.getElementById('accessKey').value.trim();
-                
-                loginMessage.textContent = 'Đang xác thực Key...';
-                loginMessage.className = 'message-box';
-                playSound('toggle');
-                
-                // MÃ HÓA KEY NGƯỜNG DÙNG NHẬP VÀO
-                const enteredKeyBase64 = encodeBase64(enteredKey);
-
-                // Mô phỏng quá trình xác thực
-                setTimeout(() => {
-                    // CHỈ CẦN KIỂM TRA TÍNH HỢP LỆ (Không kiểm tra đã sử dụng)
-                    const isValidKey = VALID_ACCESS_KEYS_BASE64.includes(enteredKeyBase64);
-                    
-                    if (isValidKey) {
-                        // Key hợp lệ 
-                        loginMessage.textContent = '✅ Key hợp lệ! Đang tải MENU';
-                        loginMessage.className = 'message-box success';
-                        playSound('success');
-                        
-                        // Chuyển màn hình sau khi đăng nhập thành công
-                        setTimeout(() => {
-                            loginScreen.style.display = 'none';
-                            mainMenu.classList.remove('hidden-content');
-                            mainMenu.style.display = 'block'; 
-                            showNotification('Chào Mừng ! Đã Kích Hoạt LBN SHOP.', 'success');
-                            updateStatsInitial(); 
-                        }, 1000);
-                        
-                    } else {
-                        // Key không hợp lệ
-                        loginMessage.textContent = '❌ Key không hợp lệ! Vui lòng kiểm tra lại.';
-                        loginMessage.className = 'message-box error';
-                        playSound('error');
-                        document.getElementById('accessKey').value = ''; 
-                    }
-                }, 1500); 
-            });
-        }
-
-
-        // --- SCRIPT 1: VÒNG TRÒN HIỆU SUẤT (CPU/RAM/NETWORK) ---
-        
-        const TOTAL_LENGTH = 251.2; 
-        const CPU_INITIAL_OFFSET = TOTAL_LENGTH - (TOTAL_LENGTH * 25 / 100); 
-        
-        let cpuInterval;
-
-        function setCircleValue(id, percent, color, textContent) {
-            const progress = document.getElementById(id + '-progress');
-            const textElement = document.getElementById(id + '-percent');
-            
-            if (!progress || !textElement) return;
-
-            const offset = TOTAL_LENGTH - (TOTAL_LENGTH * percent / 100);
-
-            textElement.textContent = textContent !== undefined ? textContent : (percent + '%');
-            progress.style.stroke = color; 
-
-            if (id !== 'cpu' || !window.isCpuTextUpdating) {
-                 setTimeout(() => {
-                     progress.style.strokeDashoffset = offset;
-                 }, 10);
-            }
-        }
-        
-        function updateCpuText() {
-            const cpuText = document.getElementById('cpu-percent');
-            if(!cpuText) return; 
-            const newPercent = getRandomInt(20, 30);
-            cpuText.textContent = newPercent + '%';
-            
-            const newInterval = getRandomInt(300, 700); 
-            
-            cpuInterval = setTimeout(updateCpuText, newInterval);
-        }
-        
-        // --- SCRIPT 2: BIỂU ĐỒ FPS ĐỘNG ---
-
-        const fpsLine = document.getElementById('fpsLine');
-        const currentFpsElement = document.getElementById('currentFps');
-        
-        const CHART_WIDTH = 340; 
-        const CHART_HEIGHT = 180;
-        const FPS_MIN = 30;
-        const FPS_MAX = 144;
-        const FPS_RANGE = FPS_MAX - FPS_MIN;
-        const MAX_POINTS = 50; 
-        
-        let fpsHistory = [];
-        let fpsInterval;
-
-        function getRandomFps() {
-            let baseFps = 60 + (Math.random() - 0.5) * 10; 
-            
-            if (Math.random() < 0.05) baseFps = 100 + Math.random() * 44; 
-            else if (Math.random() < 0.05) baseFps = 35 + Math.random() * 10; 
-
-            return Math.min(FPS_MAX, Math.max(FPS_MIN, Math.round(baseFps)));
-        }
-
-        function updateChart() {
-            if (!fpsLine || !currentFpsElement) return;
-
-            const newFps = getRandomFps();
-            
-            fpsHistory.push(newFps);
-            if (fpsHistory.length > MAX_POINTS) {
-                fpsHistory.shift(); 
-            }
-
-            let points = "";
-            const stepX = CHART_WIDTH / (MAX_POINTS - 1);
-            
-            for (let i = 0; i < fpsHistory.length; i++) {
-                const fpsValue = fpsHistory[i];
-                
-                const normalizedFps = (fpsValue - FPS_MIN) / FPS_RANGE;
-                const y = CHART_HEIGHT * (1 - normalizedFps);
-                const x = i * stepX;
-                
-                points += `${x},${y} `;
-            }
-
-            fpsLine.setAttribute('points', points.trim());
-
-            currentFpsElement.textContent = `${newFps} FPS`;
-            if (newFps > 60) {
-                 currentFpsElement.style.color = 'var(--blue-light)';
-            } else {
-                 currentFpsElement.style.color = 'var(--blue-primary)';
-            }
-        }
-        
-        function initFpsChart() {
-             fpsHistory = []; 
-             for(let i = 0; i < MAX_POINTS; i++) {
-                fpsHistory.push(getRandomFps());
-            }
-            updateChart();
-            if (fpsInterval) clearInterval(fpsInterval);
-            fpsInterval = setInterval(updateChart, 100);
-        }
-      // --- SCRIPT 3: ĐIỀU KHIỂN TÂM ẢO (Click Vào Đây)) ---
-
-        const crosshair = document.getElementById('virtualCrosshair');
-        const modal = document.getElementById('crosshairModal');
-        let isCrosshairVisible = false;
-
-        function openCrosshairModal() {
-            if (modal) modal.style.display = 'block';
-            updateCrosshair(); 
-        }
-
-        function closeCrosshairModal() {
-            if (modal) modal.style.display = 'none';
-        }
-
-        function initCrosshairState() {
-            if (!crosshair) return;
-            isCrosshairVisible = false;
-            crosshair.style.display = 'none';
-            
-            const button = document.querySelector('.toggle-crosshair-btn');
-            if (button) {
-                button.textContent = 'ĐANG TẮT: BẤM ĐỂ BẬT';
-                button.style.background = 'var(--blue-primary)'; 
-            }
-        }
-
-        function toggleCrosshairDisplay() {
-            if (!crosshair) return;
-
-            isCrosshairVisible = !isCrosshairVisible;
-            
-            crosshair.style.display = isCrosshairVisible ? 'block' : 'none';
-            
-            const button = document.querySelector('.toggle-crosshair-btn');
-            if (button) {
-                if (isCrosshairVisible) {
-                    button.textContent = 'ĐANG BẬT: BẤM ĐỂ TẮT';
-                    button.style.background = 'var(--success)';
-                    showNotification('🎯 Tâm ảo đã BẬT!', 'success');
-                    playSound('toggle');
-                } else {
-                    button.textContent = 'ĐANG TẮT: BẤM ĐỂ BẬT';
-                    button.style.background = 'var(--blue-primary)'; 
-                    showNotification('🎯 Tâm ảo đã TẮT!', 'error');
-                    playSound('toggle');
-                }
-            }
-        }
-
-        function updateCrosshair() {
-            if (!crosshair) return;
-
-            const sizeRange = document.getElementById('sizeRange').value;
-            const xRange = document.getElementById('xRange').value;
-            const yRange = document.getElementById('yRange').value;
-            const opacityRange = document.getElementById('opacityRange').value;
-
-            document.getElementById('sizeValue').textContent = sizeRange;
-            document.getElementById('xValue').textContent = xRange;
-            document.getElementById('yValue').textContent = yRange;
-            document.getElementById('opacityValue').textContent = opacityRange;
-
-            const baseSize = 64; 
-            const newSize = (baseSize * sizeRange) / 100;
-            
-            crosshair.style.width = `${newSize}px`;
-            crosshair.style.height = `${newSize}px`;
-
-            crosshair.style.transform = `translate(calc(-50% + ${xRange}px), calc(-50% + ${yRange}px))`;
-            
-            crosshair.style.opacity = opacityRange;
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeCrosshairModal();
-            }
-        }
-   
-       
-        // --- SCRIPT 4: MỞ GAME ---
-        function openFreeFire() {
-            const url = 'freefireth://';
-            
-            showNotification('🔥 Đang khởi chạy Free Fire...', 'success');
-            playSound('success');
-            
-            // Dùng setTimeout để không làm gián đoạn quá trình hiển thị thông báo
-            setTimeout(() => {
-                window.location.href = url;
-            }, 500);
-        }
-
-        function openFreeFireMax() {
-            const url = 'freefiremax://';
-            
-            showNotification('⚡ Đang khởi chạy Free Fire MAX...', 'success');
-            playSound('success');
-            
-            setTimeout(() => {
-                window.location.href = url;
-            }, 500);
-        }
-
-        // --- HÀM KHỞI TẠO CHUNG ---
-        function updateStatsInitial() {
-            // Chỉ chạy các stats động khi menu chính được hiển thị
-            if (mainMenu.style.display === 'none') return;
-
-            // Khởi tạo RAM và Network
-            const initialRamPercent = getRandomInt(30, 60); 
-            setCircleValue('ram', initialRamPercent, '#ff7f00'); 
-            
-            const initialNetworkPercent = getRandomInt(0, 54); 
-            setCircleValue('network', initialNetworkPercent, '#00ff00'); 
-            
-            // Khởi tạo CPU
-            const cpuProgress = document.getElementById('cpu-progress');
-            if(cpuProgress) {
-                cpuProgress.style.strokeDashoffset = CPU_INITIAL_OFFSET;
-                if (cpuInterval) clearTimeout(cpuInterval);
-                updateCpuText(); 
-            }
-            
-            // Khởi tạo FPS Chart
-            initFpsChart();
-            
-            // Khởi tạo Tâm Ảo
-            updateCrosshair();
-            initCrosshairState(); 
-        }
-
-        // --- SCRIPT 5: ẨN/HIỆN KEY TRUY CẬP (Logic cho biểu tượng CSS) ---
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const accessKeyInput = document.getElementById('accessKey');
-            const togglePasswordButton = document.getElementById('togglePassword');
-            const eyeIcon = document.querySelector('#togglePassword .eye-icon'); 
-
-            if (togglePasswordButton && accessKeyInput && eyeIcon) {
-                // Khởi tạo trạng thái ban đầu: ẩn key, mắt mở (không có gạch chéo)
-                accessKeyInput.setAttribute('type', 'password');
-                eyeIcon.classList.remove('closed');
-
-                togglePasswordButton.addEventListener('click', function() {
-                    // Thay đổi type giữa 'password' và 'text'
-                    const type = accessKeyInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    accessKeyInput.setAttribute('type', type);
-
-                    // Thay đổi biểu tượng con mắt bằng cách thêm/xóa class 'closed'
-                    if (type === 'password') {
-                        eyeIcon.classList.remove('closed'); // Key ẩn, mắt mở
-                    } else {
-                        eyeIcon.classList.add('closed'); // Key hiện, mắt đóng (có gạch chéo)
-                    }
-                });
-            }
-
-            // Đảm bảo màn hình login hiển thị và menu ẩn khi load
-            if (loginScreen) {
-                loginScreen.style.display = 'block';
-            }
-            if (mainMenu) {
-                mainMenu.style.display = 'none';
-                mainMenu.classList.add('hidden-content');
-            }
-        });
-    </script>
 </body>
 </html>
